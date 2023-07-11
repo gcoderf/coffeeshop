@@ -1,97 +1,79 @@
-import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:coffeshop/HomePage1.dart';
 
-void main() => runApp(MyApp());
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'flutter_flow/flutter_flow_theme.dart';
+import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/internationalization.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'flutter_flow/nav/nav.dart';
+import 'index.dart';
 
-class MyApp extends StatelessWidget {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
+
+  await FlutterFlowTheme.initialize();
+
+  final appState = FFAppState(); // Initialize FFAppState
+  await appState.initializePersistedState();
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => appState,
+    child: MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bottom Navigation Bar',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
+  State<MyApp> createState() => _MyAppState();
+
+  static _MyAppState of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>()!;
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+
+  late AppStateNotifier _appStateNotifier;
+  late GoRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _appStateNotifier = AppStateNotifier.instance;
+    _router = createRouter(_appStateNotifier);
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    HomePage1(),
-    ExplorePage(),
-    NotificationsPage(),
-    ProfilePage(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: FlashyTabBar(
-        selectedIndex: _currentIndex,
-        showElevation: true,
-        onItemSelected: (index) => setState(() {
-          _currentIndex = index;
-        }),
-        items: [
-          FlashyTabBarItem(
-            icon: Icon(Icons.event),
-            title: Text('Events'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.highlight),
-            title: Text('Highlights'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('한국어'),
-          ),
-        ],
-      ),
-    );
+  void setLocale(String language) {
+    setState(() => _locale = createLocale(language));
   }
-}
 
-class ExplorePage extends StatelessWidget {
+  void setThemeMode(ThemeMode mode) => setState(() {
+        _themeMode = mode;
+        FlutterFlowTheme.saveThemeMode(mode);
+      });
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Explore Page'),
-    );
-  }
-}
-
-class NotificationsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Notifications Page'),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Profile Page'),
+    return MaterialApp.router(
+      title: 'Coffeeshop',
+      localizationsDelegates: [
+        FFLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: _locale,
+      supportedLocales: const [Locale('en', '')],
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode: _themeMode,
+      routerConfig: _router,
     );
   }
 }

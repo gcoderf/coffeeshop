@@ -1,15 +1,20 @@
-# UI Mobile Coffeeshop Flutter
-  Project ini merupakan bagian dari UTS Mata Kuliah Mobile Programming Lanjutan <br>
-  Sesi : 202223430075 <br>
-  Dosen Pengampu :  Iip Permana, S.T, M.T <br><br>
-  <b>Link Design Figma</b> : https://www.figma.com/file/hgE9gzG9ev4v4mJQOPXAA8/UI-UX-Designer-Gevano-(Mobile-UI)?type=design&node-id=349%3A437&t=z94AjTDdAPMT72Ts-1
- 
- ### Informasi Creator
- Nama : Gevano Randhi Pilko <br>
- NIM : 20343011 <br>
- Program Studi : Informatika <br>
+# Coffeeshop
 
+A new Flutter project.
 
-## Hasil Akhir
-### >> Halaman Home
-![HomePage](https://github.com/gcoderf/coffeshop/blob/main/docs/home.jpg)
+## Getting Started
+
+FlutterFlow projects are built to run on the Flutter _stable_ release.
+
+### Getting started continued:
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
